@@ -3,7 +3,8 @@
 Provides custom Image view for React Native that allows to perform
 pinch-to-zoom on images. Works on both iOS and Android.
 
-This component uses [PhotoDraweeView](https://github.com/ongakuer/PhotoDraweeView) for Android and [MWPhotobrowser](https://github.com/mwaterfall/MWPhotoBrowser) on iOS.
+This component uses [PhotoDraweeView](https://github.com/ongakuer/PhotoDraweeView) for Android and native
+Scroll + Image approach on iOS.
 
 ## Usage
 
@@ -31,18 +32,15 @@ Basics:
 | fadeDuration | int | duration of image fade (in ms) |
 | minimumZoomScale | float | The minimum allowed zoom scale. The default value is 1.0 |
 | maximumZoomScale | float | The maximum allowed zoom scale. The default value is 3.0 |
-| showsHorizontalScrollIndicator | bool | **iOS only**: When true, shows a horizontal scroll indicator. The default value is true. |
-| showsVerticalScrollIndicator | bool | **iOS only**: When true, shows a vertical scroll indicator. The default value is true. |
 | scale | float | Set zoom scale programmatically |
 androidZoomTransitionDuration | int | **Android only**: Double-tap zoom transition duration |
 | androidScaleType | String | **Android only**: One of the default *Android* scale types: "center", "centerCrop", "centerInside", "fitCenter", "fitStart", "fitEnd", "fitXY" |
 | onLoadStart | func | Callback function |
 | onLoad | func | Callback function |
 | onLoadEnd | func | Callback function |
-| onProgress | func | **iOS only**: Callback function, invoked on download progress with {nativeEvent: {loaded, total}}. |
 | onTap | func | Callback function (called on image tap) |
-| onViewTap | func | Callback function (called on tap outside of image) |
-| onScale | func | Callback function |
+| onViewTap | func | Callback function (called on tap outside of image). Currently **Android only** (will be available for iOS later) |
+| onScale | func | Callback function. Currently **Android only** (will be available for iOS later) |
 
 ## Compared to [react-native-image-zoom](https://github.com/Anthonyzou/react-native-image-zoom)
 
@@ -61,7 +59,7 @@ features Image has (the goal is to be fully compaitable with Image and support a
 
 Just two simple steps:
 ```
-npm install --save react-native-photo-view
+npm install --save react-native-photo-view@1.2.0
 ```
 ```
 rnpm link react-native-photo-view
@@ -82,9 +80,9 @@ dependencies {
 }
 ```
 
-3. Add it to your `MainActivity.java` for RN < 0.29 and to your `MainApplication.java` for RN >=0.29
+3. Add it to your `MainActivity.java`
 
-To register `PhotoViewPackage`, you need to change the `MainActivity` or `MainApplication` depending on React Native version of your app:
+Next, you need to change the `MainActivity` of your app to register `PhotoViewPackage` :
 ```java
 import com.reactnative.photoview.PhotoViewPackage;
 

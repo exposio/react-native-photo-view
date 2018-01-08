@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { requireNativeComponent, View } from 'react-native';
-import ViewPropTypes from 'react-native/Libraries/Components/View/ViewPropTypes';
+import React, {Component} from 'react';
+import {requireNativeComponent, View} from 'react-native';
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -28,13 +27,12 @@ export default class PhotoView extends Component {
         androidZoomTransitionDuration: PropTypes.number,
         androidScaleType: PropTypes.oneOf(["center", "centerCrop", "centerInside", "fitCenter", "fitStart", "fitEnd", "fitXY", "matrix"]),
         onLoadStart: PropTypes.func,
-        onError: PropTypes.func,
         onLoad: PropTypes.func,
         onLoadEnd: PropTypes.func,
         onTap: PropTypes.func,
         onViewTap: PropTypes.func,
         onScale: PropTypes.func,
-        ...ViewPropTypes
+        ...View.propTypes
     };
 
     render() {
@@ -50,19 +48,12 @@ export default class PhotoView extends Component {
         }
 
         if (source && source.uri) {
-            var {onLoadStart, onLoad, onLoadEnd, onTap, onViewTap, onScale, onError, ...props} = this.props;
+            var {onLoadStart, onLoad, onLoadEnd} = this.props;
 
             var nativeProps = {
-                onPhotoViewerError: onError,
-                onPhotoViewerLoadStart: onLoadStart,
-                onPhotoViewerLoad: onLoad,
-                onPhotoViewerLoadEnd: onLoadEnd,
-                onPhotoViewerTap: onTap,
-                onPhotoViewerViewTap: onViewTap,
-                onPhotoViewerScale: onScale,
-                ...props,
+                ...this.props,
                 shouldNotifyLoadEvents: !!(onLoadStart || onLoad || onLoadEnd),
-                src: source,
+                src: source.uri,
                 loadingIndicatorSrc: loadingIndicatorSource ? loadingIndicatorSource.uri : null,
             };
 
@@ -74,17 +65,9 @@ export default class PhotoView extends Component {
 
 var cfg = {
     nativeOnly: {
-        onPhotoViewerError: true,
-        onPhotoViewerLoadStart: true,
-        onPhotoViewerLoad: true,
-        onPhotoViewerLoadEnd: true,
-        onPhotoViewerTap: true,
-        onPhotoViewerViewTap: true,
-        onPhotoViewerScale: true,
-        shouldNotifyLoadEvents: true,
         src: true,
-        loadingIndicatorSrc: true
+        loadingIndicatorSrc: true,
+        shouldNotifyLoadEvents: true
     }
 };
-
 const PhotoViewAndroid = requireNativeComponent('PhotoViewAndroid', PhotoView, cfg);
