@@ -48,12 +48,19 @@ export default class PhotoView extends Component {
         }
 
         if (source && source.uri) {
-            var {onLoadStart, onLoad, onLoadEnd} = this.props;
+            var {onLoadStart, onLoad, onLoadEnd, onTap, onViewTap, onScale, onError, ...props} = this.props;
 
             var nativeProps = {
-                ...this.props,
-                shouldNotifyLoadEvents: !!(onLoadStart || onLoad || onLoadEnd),
-                src: source.uri,
+                onPhotoViewerError: onError,
+                onPhotoViewerLoadStart: onLoadStart,
+                onPhotoViewerLoad: onLoad,
+                onPhotoViewerLoadEnd: onLoadEnd,
+                onPhotoViewerTap: onTap,
+                onPhotoViewerViewTap: onViewTap,
+                onPhotoViewerScale: onScale,
+                ...props,
+                shouldNotifyLoadEvents: !!(onLoadStart || onLoad || onLoadEnd || onError),
+                src: source,
                 loadingIndicatorSrc: loadingIndicatorSource ? loadingIndicatorSource.uri : null,
             };
 
